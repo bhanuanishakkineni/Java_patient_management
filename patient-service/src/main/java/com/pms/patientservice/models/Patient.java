@@ -47,7 +47,7 @@ public class Patient {
     }
 
     public @NotNull @Email String getEmail() {
-        return name;
+        return email;
     }
 
     public void setEmail(@NotNull @Email String email) {
