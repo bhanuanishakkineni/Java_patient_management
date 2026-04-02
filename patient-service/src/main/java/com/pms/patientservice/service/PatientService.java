@@ -7,6 +7,7 @@ import com.pms.patientservice.repository.PatientRepository;
 import org.springframework.stereotype.Service;
 import com.pms.patientservice.mapper.PatientMapper;
 import java.util.List;
+import com.pms.patientservice.exception.EmailAlreadyExistsException;
 
 @Service
 public class PatientService {
@@ -22,6 +23,9 @@ public class PatientService {
     }
 
     public PatientResponseDTO createPatient(PatientRequestDTO patientRequestDTO) {
+        if (patientRepository.existsByEmail(patientRequestDTO.getEmail())) {
+            throw new EmailAlreadyExistsException("A patient with this email already exists.");
+        }
         Patient patient = patientRepository.save(PatientMapper.toEntity(patientRequestDTO));
         return PatientMapper.toDTO(patient);
         
